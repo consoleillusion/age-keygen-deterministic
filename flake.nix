@@ -16,12 +16,14 @@
         defaultPackage = naersk'.buildPackage {
           src = ./.;
         };
+
         packages.${system}.default = pkgs.stdenv.mkDerivation {
           name = "age-keygen-deterministic";
           src = self;
           buildPhase = "cargo build --release";
           installPhase = "mkdir -p $out/bin; install -t $out/bin age-keygen-deterministic";
         };
+        packages.${system}.age-keygen-deterministic = packages.${system}.default;
 
         devShell = pkgs.mkShell {
           nativeBuildInputs = with pkgs; [ rustc cargo ];
